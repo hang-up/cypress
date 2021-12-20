@@ -903,6 +903,8 @@ export class $Cy implements ITimeouts, IStability, IAssertions, IRetries, IJQuer
             // TODO: handle no longer error when ended early
             cy.doneEarly()
 
+            // if using multi-domain, unbind any listeners waiting for a done() callback to come from cross domain
+            Cypress.multiDomainCommunicator.emit('unbind:done:called')
             originalDone(err)
 
             // return null else we there are situations
